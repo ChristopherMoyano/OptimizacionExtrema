@@ -33,7 +33,10 @@ def funcionCosto(solucion,costo,capacidad):
     else:
         pos_solucion = np.ones_like(solucion)*-1
         return pos_solucion,-1
-
+    
+def VectorProbabilidad(n, tau):
+    probabilidades = np.array([i**(-tau) for i in range(1,n+1)])
+    probabilidades /= np.sum(probabilidades)
 if len(sys.argv)==5:
     semilla = int(sys.argv[1])
     ite = int(sys.argv[2]) #iteracion  
