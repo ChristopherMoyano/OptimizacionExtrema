@@ -16,14 +16,18 @@ def LeerArchivo(entrada):
 
 #def CostoFactibilidad(solucion, elementos, peso_max):
 #   peso_total = 0
-#    costo_total = 0
-#    for i, contiene in enumerate(solucion):
+#   costo_total = 0
+#   for i, contiene in enumerate(solucion):
 #        if contiene == 1:
 #            peso_total += elementos[i]['peso']
 #            costo_total += elementos[i]['valor']
 
-#    factible = peso_total <= peso_max
-#    return costo_total, factible
+#   factible = peso_total <= peso_max
+#   if factible:
+#      return costo_total
+#   else: 
+#      return -1
+    
 
 def funcionCosto(solucion,costo,capacidad):
     pos_solucion = solucion*costo
@@ -35,7 +39,16 @@ def funcionCosto(solucion,costo,capacidad):
         return pos_solucion,-1
 
 def calculofitness(solucion, pesos, valores, capacidad):
+    peso_total = np.sum(solucion * pesos)
+    valor_total = np.sum(solucion * valores)
+    factible = peso_total <= capacidad #se ve si se excede el peso max 
+    if factible:
+       return valor_total
+    else: 
+       return -1
     
+    
+
 def VectorProbabilidad(n, tau):
     probabilidades = np.array([i**(-tau) for i in range(1,n+1)]) #usando la expresion Pi = i^(-tau)
     probabilidades /= np.sum(probabilidades) #aqui se normaliza para que la suma de los valores sea 1
