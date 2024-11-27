@@ -51,7 +51,9 @@ def calculofitness(solucion, pesos, precio, capacidad):
 def ruleta(probabilidades):
     random = np.random.rand()
     acumulada = np.cumsum(probabilidades)
-    for i, prob_acum # falta completar
+    for i, acumulada in enumerate(acumulada):
+        if random <= acumulada:
+            return i
 
 
 def VectorProbabilidad(n, tau):
