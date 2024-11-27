@@ -14,20 +14,6 @@ def LeerArchivo(entrada):
     datos = datos.astype('int32').to_numpy()
     return n,c,z,datos
 
-#def CostoFactibilidad(solucion, elementos, peso_max):
-#   peso_total = 0
-#   costo_total = 0
-#   for i, contiene in enumerate(solucion):
-#        if contiene == 1:
-#            peso_total += elementos[i]['peso']
-#            costo_total += elementos[i]['valor']
-
-#   factible = peso_total <= peso_max
-#   if factible:
-#      return costo_total
-#   else: 
-#      return -1
-    
 
 def funcionCosto(solucion,costo,capacidad):
     pos_solucion = solucion*costo
