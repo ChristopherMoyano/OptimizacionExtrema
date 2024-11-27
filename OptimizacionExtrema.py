@@ -46,7 +46,13 @@ def VectorProbabilidad(n, tau):
     probabilidades = np.array([i**(-tau) for i in range(1,n+1)]) #usando la expresion Pi = i^(-tau)
     probabilidades /= np.sum(probabilidades) #aqui se normaliza para que la suma de los valores sea 1
     return probabilidades
-
+#yo hice esta funcion que hace que se ajuste la solucion en caso ser infactible, volviendola factible(Matito)
+def Ajustarsolucion(solucion, pesos, capacidad):
+    peso_total = np.sum(solucion * peso)
+    while peso_total > capacidad #mientras el peso exceda su capacidad tenemos que sacar un elemento de la mochila
+        indice = np.where(solucion == 1)[0] #se selecciona los indices
+        if len(indice == 0)
+    #falta
 if len(sys.argv)==5:
     semilla = int(sys.argv[1])
     ite = int(sys.argv[2]) #iteracion  
@@ -72,7 +78,7 @@ print(mejor_solucion,mejor_costo)
 vector_probabilidades = VectorProbabilidad(n,tau)
 print(vector_probabilidades)
 
-#Yo hice esto de acuerdo a la diapo del algoritmo de la linea 6 al 8(Matito)
+#Yo hice esto de acuerdo a la diapo del algoritmo del pdf de la linea 6 al 8(Matito)
 for iteracion in range(ite):
     j = ruleta(vector_probabilidades)
     nueva_solucion = solucionInicial.copy()
