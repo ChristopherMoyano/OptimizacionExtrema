@@ -14,16 +14,16 @@ def LeerArchivo(entrada):
     datos = datos.astype('int32').to_numpy()
     return n,c,z,datos
 
-def CostoFactibilidad(solucion, elementos, peso_max):
-    peso_total = 0
-    costo_total = 0
-    for i, contiene in enumerate(solucion):
-        if contiene == 1:
-            peso_total += elementos[i]['peso']
-            costo_total += elementos[i]['valor']
+#def CostoFactibilidad(solucion, elementos, peso_max):
+#   peso_total = 0
+#    costo_total = 0
+#    for i, contiene in enumerate(solucion):
+#        if contiene == 1:
+#            peso_total += elementos[i]['peso']
+#            costo_total += elementos[i]['valor']
 
-    factible = peso_total <= peso_max
-    return costo_total, factible
+#    factible = peso_total <= peso_max
+#    return costo_total, factible
 
 def funcionCosto(solucion,costo,capacidad):
     pos_solucion = solucion*costo
@@ -33,10 +33,14 @@ def funcionCosto(solucion,costo,capacidad):
     else:
         pos_solucion = np.ones_like(solucion)*-1
         return pos_solucion,-1
+
+def calculofitness(solucion, pesos, valores, capacidad):
     
 def VectorProbabilidad(n, tau):
-    probabilidades = np.array([i**(-tau) for i in range(1,n+1)])
-    probabilidades /= np.sum(probabilidades)
+    probabilidades = np.array([i**(-tau) for i in range(1,n+1)]) #usando la expresion Pi = i^(-tau)
+    probabilidades /= np.sum(probabilidades) #aqui se normaliza para que la suma de los valores sea 1
+    return probabilidades
+
 if len(sys.argv)==5:
     semilla = int(sys.argv[1])
     ite = int(sys.argv[2]) #iteracion  
@@ -58,8 +62,10 @@ peso = datos[:,2]
 solucionInicial = np.random.randint(0,2,n)
 mejor_solucion,mejor_costo = funcionCosto(solucionInicial,precio,c)
 print(mejor_solucion,mejor_costo)
+vector_probabilidades = VectorProbabilidad(n,tau)
+print(vector_probabilidades)
 
-#gurardar mejor solucion
+#guardar mejor solucion
 #crear de probabilidades
 #funcion crear ruleta
 #funcion calculo fitness
