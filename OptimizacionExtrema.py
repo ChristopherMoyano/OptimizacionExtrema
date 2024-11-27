@@ -37,11 +37,11 @@ def funcionCosto(solucion,costo,capacidad):
     else:
         pos_solucion = np.ones_like(solucion)*-1
         return pos_solucion,-1
-
+#esta parte la hice yo (Matito)
 def calculofitness(solucion, pesos, valores, capacidad):
     peso_total = np.sum(solucion * pesos)
     valor_total = np.sum(solucion * valores)
-    factible = peso_total <= capacidad #se ve si se excede el peso max 
+    factible = peso_total <= capacidad #se ve si se excede el peso maximo
     if factible:
        return valor_total
     else: 
