@@ -95,5 +95,5 @@ print(mejor_fitness)
 #funcion selecciona item a reemplazar
 
 #lo que falta
-#terminar la funcion ruleta
+#como es infactible hay que ajustar la solucion eliminando objetos de la mochila
 #contar los elementos que estan dentro de la mochila
