@@ -51,7 +51,7 @@ def Ajustarsolucion(solucion, pesos, capacidad):
     peso_total = np.sum(solucion * peso)
     while peso_total > capacidad #mientras el peso exceda su capacidad tenemos que sacar un elemento de la mochila
         indice = np.where(solucion == 1)[0] #se selecciona los indices
-        if len(indice == 0)
+        if len(indice) == 0:
     #falta
 if len(sys.argv)==5:
     semilla = int(sys.argv[1])
