@@ -1,7 +1,6 @@
 import numpy as np 
 import pandas as pd
-import sys 
-import os 
+import sys  
 
 def LeerArchivo(entrada):
     ArchivoEntrada = pd.read_table(entrada,header = None)
@@ -14,45 +13,69 @@ def LeerArchivo(entrada):
     datos = datos.astype('int32').to_numpy()
     return n,c,z,datos
 
-
-def funcionCosto(solucion,costo,capacidad):
-    pos_solucion = solucion*costo
+def funcionCosto(solucion,peso,capacidad,precio):
+    pos_solucion = solucion*peso
     suma_pos_solucion = np.sum(pos_solucion)
+    mejor_costo = np.sum(solucion*precio)
     if(suma_pos_solucion <= capacidad):
-        return pos_solucion, suma_pos_solucion
+        return solucion, mejor_costo
     else:
-        pos_solucion = np.ones_like(solucion)*-1
-        return pos_solucion,-1
-#esta parte la hice yo (Matito)
-def calculofitness(solucion, pesos, precio, capacidad):
-    peso_total = np.sum(solucion * pesos)
-    valor_total = np.sum(solucion * precio)
-    factible = peso_total <= capacidad #se ve si se excede el peso maximo
-    if factible:
-       return valor_total
-    else: 
-       return -1
+        solucion = np.zeros_like(solucion)
+        return solucion,0
+
+def Calcular_Fitness(solucion,peso,precio,capacidad,probabilidades):
+    peso_total = np.sum(solucion * peso)
+    fitness = precio/peso
+    if(peso_total<=capacidad):
+        indices = np.where(solucion == 0)[0]
+        elegido = ruleta(probabilidades[:np.shape(indices)[0]])
+        fitness_0=[fitness[i] for i in indices]
+        for i in range(np.shape(fitness_0)[0]):
+            for j in range(np.shape(fitness_0)[0]):
+                if(fitness_0[j] > fitness_0[i]):
+                    aux_index = indices[i]
+                    aux_fitness = fitness_0[i]
+                    indices[i] = indices[j]
+                    fitness_0[i]=fitness_0[j]
+                    indices[j]= aux_index
+                    fitness_0[j] = aux_fitness
+        solucion[indices[elegido]] = 1
+                    
+    else:
+        indices = np.where(solucion == 1)[0]
+        elegido = ruleta(probabilidades[:np.shape(indices)[0]])
+        fitness_1=[fitness[i] for i in indices]
+        for i in range(np.shape(fitness_1)[0]):
+            for j in range(np.shape(fitness_1)[0]):
+                if(fitness_1[j] < fitness_1[i]):
+                    aux_index = indices[i]
+                    aux_fitness = fitness_1[i]
+                    indices[i] = indices[j]
+                    fitness_1[i]=fitness_1[j]
+                    indices[j]= aux_index
+                    fitness[j] = aux_fitness
+        solucion[indices[elegido]] = 0
     
-    
+    return solucion
+
+
+
+
 def ruleta(probabilidades):
     random = np.random.rand()
     acumulada = np.cumsum(probabilidades)
-    for i, acumulada in enumerate(acumulada):
-        if random <= acumulada:
+    for i, acumulada in enumerate(acumulada) :
+        if acumulada >= random:
             return i
 
 
+
 def VectorProbabilidad(n, tau):
-    probabilidades = np.array([i**(-tau) for i in range(1,n+1)]) #usando la expresion Pi = i^(-tau)
+    probabilidades = np.array([i**(-tau) for i in range(1,n+1)]) #usando la expresion Pi = i^(-tau) #efinir bien i
     probabilidades /= np.sum(probabilidades) #aqui se normaliza para que la suma de los valores sea 1
     return probabilidades
-#yo hice esta funcion que hace que se ajuste la solucion en caso ser infactible, volviendola factible(Matito)
-def Ajustarsolucion(solucion, pesos, capacidad):
-    peso_total = np.sum(solucion * peso)
-    while peso_total > capacidad #mientras el peso exceda su capacidad tenemos que sacar un elemento de la mochila
-        indice = np.where(solucion == 1)[0] #se selecciona los indices
-        if len(indice) == 0:
-    #falta
+
+    
 if len(sys.argv)==5:
     semilla = int(sys.argv[1])
     ite = int(sys.argv[2]) #iteracion  
@@ -65,41 +88,24 @@ else:
     sys.exit(0)
 
 np.random.seed(semilla)
+
+
+
 n,c,z,datos = LeerArchivo(entrada)
-print(n)
-print(c)
-print(z)
 precio= datos[:,1]
 peso = datos[:,2]
 solucionInicial = np.random.randint(0,2,n)
-mejor_solucion,mejor_costo = funcionCosto(solucionInicial,precio,c)
-mejor_fitness = calculofitness(solucionInicial,peso,precio,c)
-print(mejor_solucion,mejor_costo)
-vector_probabilidades = VectorProbabilidad(n,tau)
-print(vector_probabilidades)
+mejor_solucion,mejor_costo = funcionCosto(solucionInicial,peso,c,precio)
+probabilidades = VectorProbabilidad(n,tau)
+for i in range(ite):
+    prueba_solucion = Calcular_Fitness(mejor_solucion,peso,precio,c,probabilidades)
+    nueva_solucion,nuevo_costo = funcionCosto(prueba_solucion,peso,c,precio)
+    print(nueva_solucion,nuevo_costo)
+    if(nuevo_costo>=mejor_costo):
+        #print(prueba_solucion)
+        mejor_solucion = nueva_solucion
+        mejor_costo = nuevo_costo
+        
 
-#Yo hice esto de acuerdo a la diapo del algoritmo del pdf de la linea 6 al 8(Matito)
-for iteracion in range(ite):
-    j = ruleta(vector_probabilidades)
-    nueva_solucion = solucionInicial.copy()
-    nueva_solucion[j] = 1 - nueva_solucion[j]
-    fitness_nueva = calculofitness(solucionInicial, peso, precio, c)
+print(mejor_solucion, mejor_costo)
 
-    if fitness_nueva > mejor_fitness:
-        mejor_solucion = nueva_solucion.copy()
-        mejor_fitness = fitness_nueva
-
-    print(f"iteracion {iteracion + 1 }: Mejor fitness = {mejor_fitness}")
-
-print(mejor_solucion)
-print(mejor_fitness)
-
-#guardar mejor solucion
-#crear de probabilidades
-#funcion crear ruleta
-#funcion calculo fitness
-#funcion selecciona item a reemplazar
-
-#lo que falta
-#como es infactible hay que ajustar la solucion eliminando objetos de la mochila
-#contar los elementos que estan dentro de la mochila
