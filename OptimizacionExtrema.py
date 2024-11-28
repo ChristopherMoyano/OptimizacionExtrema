@@ -14,11 +14,10 @@ def LeerArchivo(entrada):
     return n,c,z,datos
 
 def funcionCosto(solucion,peso,capacidad,precio):
-    pos_solucion = solucion*peso
-    suma_pos_solucion = np.sum(pos_solucion)
-    mejor_costo = np.sum(solucion*precio)
-    if(suma_pos_solucion <= capacidad):
-        return solucion, mejor_costo
+    peso_total = np.sum(solucion*peso)
+    costo_total = np.sum(solucion*precio)
+    if(peso_total <= capacidad):
+        return solucion, costo_total
     else:
         solucion = np.zeros_like(solucion)
         return solucion,0
@@ -39,8 +38,7 @@ def Calcular_Fitness(solucion,peso,precio,capacidad,probabilidades):
                     fitness_0[i]=fitness_0[j]
                     indices[j]= aux_index
                     fitness_0[j] = aux_fitness
-        solucion[indices[elegido]] = 1
-                    
+        solucion[indices[elegido]] = 1                
     else:
         indices = np.where(solucion == 1)[0]
         elegido = ruleta(probabilidades[:np.shape(indices)[0]])
@@ -55,7 +53,7 @@ def Calcular_Fitness(solucion,peso,precio,capacidad,probabilidades):
                     indices[j]= aux_index
                     fitness[j] = aux_fitness
         solucion[indices[elegido]] = 0
-    
+    #costo = np.sum(solucion*precio)
     return solucion
 
 
@@ -64,6 +62,8 @@ def Calcular_Fitness(solucion,peso,precio,capacidad,probabilidades):
 def ruleta(probabilidades):
     random = np.random.rand()
     acumulada = np.cumsum(probabilidades)
+    dividendo = np.sum(probabilidades)
+    acumulada = acumulada/dividendo
     for i, acumulada in enumerate(acumulada) :
         if acumulada >= random:
             return i
@@ -97,15 +97,15 @@ peso = datos[:,2]
 solucionInicial = np.random.randint(0,2,n)
 mejor_solucion,mejor_costo = funcionCosto(solucionInicial,peso,c,precio)
 probabilidades = VectorProbabilidad(n,tau)
+
 for i in range(ite):
     prueba_solucion = Calcular_Fitness(mejor_solucion,peso,precio,c,probabilidades)
     nueva_solucion,nuevo_costo = funcionCosto(prueba_solucion,peso,c,precio)
-    print(nueva_solucion,nuevo_costo)
-    if(nuevo_costo>=mejor_costo):
-        #print(prueba_solucion)
+    if(nuevo_costo>mejor_costo):
         mejor_solucion = nueva_solucion
         mejor_costo = nuevo_costo
+        capacidad = np.sum(peso*nueva_solucion)
+        print(mejor_solucion, mejor_costo, capacidad)
         
 
-print(mejor_solucion, mejor_costo)
 
