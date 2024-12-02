@@ -22,8 +22,8 @@ predefinida.
 Pi is the probability that the i^th species is chosen:
 $Pi = i^{-\tau}$
  
-`1 ≤ i ≤ n` Eq.1
-La componente o especie eliminada es reemplazada por
+`1 ≤ i ≤ n`  Eq.1
+  La componente o especie eliminada es reemplazada por
 una nueva componente o especie, elegida de forma
 randomica, en la solución o ecosistema.
 Finalmente se recalcula la aptitud o fitnes de cada
