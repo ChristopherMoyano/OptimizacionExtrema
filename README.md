@@ -2,7 +2,6 @@
  se resolvera el problema de la mochila mediante extremal optimization
 
  >[!important]
-
 >Recuerde instalar
 **Numpy** **Pandas** con:
 > ```
@@ -11,7 +10,7 @@
 > ```
 > pip3 install Pandas.
 >```
-# Metodología 
+## Metodología 
 El Problema de la Mochila: El Problema de la
 Mochila es un problema clásico de optimización combinatoria
 en el que se busca seleccionar un subconjunto de objetos de
@@ -28,7 +27,7 @@ randomica, en la solución o ecosistema.
 Finalmente se recalcula la aptitud o fitnes de cada
 componente o especie de la nueva solución o ecosistema.
 
-# Qué colocar en la terminal:
+### Qué colocar en la terminal:
 [nombre.py] [semilla] [iteraciones] [vectordeprobabilidad] [.\nombredelacarpeta\nombredelproblema]
 
 ### Integrantes
