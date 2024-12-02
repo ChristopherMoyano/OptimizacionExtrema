@@ -20,7 +20,9 @@ predefinida.
 
 
 Pi is the probability that the i^th species is chosen:
-Pi = i^−τ ∀i | 1 ≤ i ≤ n | Eq.1
+$Pi = i^{-\tau}$
+ 
+1 ≤ i ≤ n Eq.1
 La componente o especie eliminada es reemplazada por
 una nueva componente o especie, elegida de forma
 randomica, en la solución o ecosistema.
@@ -28,8 +30,12 @@ Finalmente se recalcula la aptitud o fitnes de cada
 componente o especie de la nueva solución o ecosistema.
 
 ### Qué colocar en la terminal:
-[nombre.py] [semilla] [iteraciones] [vectordeprobabilidad] [.\nombredelacarpeta\nombredelproblema]
-
+>[!Tip]
+> en la terminal colocar:
+>```
+>[nombre.py] [semilla] [iteraciones] [vectordeprobabilidad] [.\nombredelacarpeta\nombredelproblema]
+>```
+>
 ### Integrantes
 - Débora Huerta
 - Christopher Moyano
