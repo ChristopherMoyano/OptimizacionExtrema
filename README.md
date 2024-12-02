@@ -1,7 +1,7 @@
 # OptimizacionExtrema
  se resolvera el problema de la mochila mediante extremal optimization
 
->[!important]
+ >[!important]
 
 >Recuerde instalar
 **Numpy** **Pandas** con:
