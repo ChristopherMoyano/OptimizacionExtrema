@@ -1,6 +1,16 @@
 # OptimizacionExtrema
  se resolvera el problema de la mochila mediante extremal optimization
 
+>[!important]
+
+>Recuerde instalar
+**Numpy** **Pandas** con:
+> ```
+> pip3 install Numpy.
+>```
+> ```
+> pip3 install Pandas.
+>```
 # Metodología 
 El Problema de la Mochila: El Problema de la
 Mochila es un problema clásico de optimización combinatoria
@@ -21,10 +31,10 @@ componente o especie de la nueva solución o ecosistema.
 # Qué colocar en la terminal:
 [nombre.py] [semilla] [iteraciones] [vectordeprobabilidad] [.\nombredelacarpeta\nombredelproblema]
 
-# Integrantes
-Débora Huerta
-Christopher Moyano
-Matías Olave
+### Integrantes
+- Débora Huerta
+- Christopher Moyano
+- Matías Olave
 
 
 
